@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./soinsuubunkai.css">
+    <script>
+        
+        
+            let m,n;
+            let ran="";
+            
+        function primeFactorization() {
+           m=n;
+            
+  if (n < 2) return [];
+
+  const factors = [];
+  let divisor = 2;
+  while (n >= divisor * divisor) {
+    if (n % divisor === 0) {
+        
+      factors.push(divisor);
+      n = n / divisor;
+    } else {
+      divisor++;
+    }
+  }
+
+  // 最後に残った数も素数であるため、追加する
+  if (n > 1) {
+    factors.push(n);
+     
+  }
+
+  //joinで配列の　,　を別の記号に置き換えます
+  const factorst=factors.join("×");
+  const soi=factors.join("*");
+  //document.getElementById("re1").textContent=ran+"="+factorst;
+  
+  //ここから素因数をn進数に直すプログラムをかきます(やっぱり関数を作ります)
+  const soinsu=soinsuu(factors);
+  //document.getElementById("rand").textContent=soinsu;
+  const soinsuust=soinsu.join("×");
+  document.getElementById("re1").textContent=ran+"="+soinsuust;
+  n=m;
+}
+
+//素因数をn進数に直す
+function soinsuu(x){
+  const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let length1=x.length;
+  const factorsn=[];
+  let result="";
+  let sinsuu=document.getElementById("sinsuu").value;
+  for(let i=0;i<length1;i++){
+    for(;x[i]>=1;){
+      result=characters.charAt(x[i]%sinsuu)+result;
+      x[i]/=sinsuu;
+      factorsn[i]=result;
+    }
+    result="";
+  }
+
+  return factorsn;
+}
+
+function soinsuu1(x){
+  const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let length1=x.length;
+  const factorsn=[];
+  let result="";
+  let sinsuu=document.getElementById("sin").value;
+  for(let i=0;i<length1;i++){
+    for(;x[i]>=1;){
+      result=characters.charAt(x[i]%sinsuu)+result;
+      x[i]/=sinsuu;
+      factorsn[i]=result;
+    }
+    result="";
+  }
+
+  return factorsn;
+}
+
+function hantei(){
+  
+  if (n < 2) return [];
+
+  const factors = [];
+  let divisor = 2;
+  while (n >= divisor * divisor) {
+    if (n % divisor === 0) {
+        
+      factors.push(divisor);
+      n = n / divisor;
+    } else {
+      divisor++;
+    }
+  }
+
+  // 最後に残った数も素数であるため、追加する
+  if (n > 1) {
+    factors.push(n);
+     
+  }
+  const factn=soinsuu(factors)
+  const factorst=factn.join("×");
+  const soias=factn.join("*");
+  const soiku=factn.join(" ")
+  n=m;
+  const ans=document.getElementById("kotae").value;
+
+  //入力(ans)と答えが一致してるか
+  if(ans==soias||ans==soiku||ans==factorst){
+document.getElementById("hant").textContent="正解！";
+  }else{
+    document.getElementById("hant").textContent="不正解";
+  }
+
+  return false;
+}
+
+
+        //乱数生成
+        function generateRandomString() {
+          document.getElementById("hant").textContent=""; //初期化
+          document.getElementById("kotae").value="";
+            let length=document.getElementById("keta1").value; 
+  const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let result ="";
+  let N=0;
+  
+  //ここら辺はgemini任せ
+  const charactersLength = document.getElementById("sinsuu").value;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  const Nn=result.split("").map((str)=>characters.indexOf(str));
+
+  document.getElementById("re1").textContent=result;
+  //document.getElementById("nsuu").value=result;
+
+  //document.getElementById("nh").value=Nn;
+  //10進数に変換する
+  for(let j=0;j<length;j++){
+    N+=Nn[j]*((charactersLength)**(length-j-1));
+  }
+  //document.getElementById("n10").value=N;
+  n=N;
+  m=N;
+  ran=result;
+  if(document.getElementById("randandsoi").checked==true){
+    primeFactorization();
+  }
+}
+
+function soinsuubunkaisuruyo(){
+    
+    
+  const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let result1 = document.getElementById("suuzi").value;
+  let N=0;
+  const charactersLength = document.getElementById("sin").value;
+  const Nn=result1.split("").map((str)=>characters.indexOf(str));
+
+  let length1=Nn.length;
+
+  //10進数に変換する
+  for(let j=0;j<length1;j++){
+    N+=Nn[j]*((charactersLength)**(length1-j-1));
+  }
+ 
+  n=N;
+  m=N;
+  ran=result1;
+            
+  if (n < 2) return [];
+
+  const factors = [];
+  let divisor = 2;
+  while (n >= divisor * divisor) {
+    if (n % divisor === 0) {
+        
+      factors.push(divisor);
+      n = n / divisor;
+    } else {
+      divisor++;
+    }
+  }
+
+  // 最後に残った数も素数であるため、追加する
+  if (n > 1) {
+    factors.push(n);
+     
+  }
+
+  //joinで配列の　,　を別の記号に置き換えます
+  const factorst=factors.join("×");
+  
+  //ここから素因数をn進数に直すプログラムをかきます(やっぱり関数を作ります)
+  const soinsu=soinsuu1(factors);
+  const soinsuust=soinsu.join("×");
+  document.getElementById("soin").textContent=ran+"="+soinsuust;
+  n=m;
+}
+
+function sinsuu10(){
+    const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let result1 = document.getElementById("suuzi").value;
+  let N=0;
+  const charactersLength = document.getElementById("sin").value;
+  const Nn=result1.split("").map((str)=>characters.indexOf(str));
+
+  let length1=Nn.length;
+
+  //10進数に変換する
+  for(let j=0;j<length1;j++){
+    N+=Nn[j]*((charactersLength)**(length1-j-1));
+  }
+  document.getElementById("sins10").textContent=result1+"→"+N;
+}
+
+ </script>
+</head>
+<body>
+    
+  <button onclick="generateRandomString()">乱数を生成</button>
+  <button onclick="primeFactorization()">素因数分解</button>
+  <div class="mondai"><p id="re1"><br></p></div>
+  
+  <form onsubmit="return hantei()">
+  <input id="kotae" type="text" name="kotae" value="" placeholder="答えを入力" autocomplete="off">
+  </form>
+   <button onclick="hantei()">判定</button>
+   <p><small>「×」は「×」または「*」または「 (スペース)」</small></p>
+   <p id="hant"></p>
+   <br>
+   <p>乱数設定</p>
+
+    
+<p>進数<input id="sinsuu" type="text" value="10" placeholder="何進数"></p>
+<p>桁数<input type="text" id="keta1" value="3" placeholder="桁数"></p>
+<input type="checkbox" name="randsoi" id="randandsoi" >乱数を生成したときに素因数分解も表示する<br>
+<br>
+<p>素因数分解します</p>
+<p>進数<input type="text" id="sin" value="10" placeholder="何進数？"></p>
+<input type="text" id="suuzi" value="" placeholder="素因数分解したい数字入力">
+
+<button onclick="soinsuubunkaisuruyo()">素因数分解</button>
+<button onclick="sinsuu10()">10進数に変換</button>
+<p id="sins10"></p>
+<p id="soin"></p>
+   
+</body>
+</html>
